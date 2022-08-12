@@ -1,0 +1,27 @@
+{
+  "name": "findxiaoxi",
+  "version": "1.0.0",
+  "description": "寻找小希小游戏",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/zhzhch335/findxiaoxi.git"
+  },
+  "keywords": [
+    "game",
+    "electron"
+  ],
+  "author": "林语琛",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zhzhch335/findxiaoxi/issues"
+  },
+  "homepage": "https://github.com/zhzhch335/findxiaoxi#readme",
+  "devDependencies": {
+    "electron": "^20.0.2"
+  }
+}

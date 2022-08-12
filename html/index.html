@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <title>寻找小希</title>
+  </head>
+  <body style="text-align: center;">
+    <h1>寻找小希</h1>
+    <div>
+      突然有一天，<span style="text-decoration:line-through;">大家的爹</span>小希失踪了，快快移动你的鼠标，在你电脑的各处寻找小希吧！
+    </div>
+    <div>
+      （点击下方图片开始）
+    </div>
+    <div>
+      <img style="cursor:pointer" src="../xiaoxi/alert.gif" alt="">
+    </div>
+  </body>
+  <script>
+    window.onbeforeunload = (e) => {
+      alert("小希，找到你了！")
+      e.returnValue = false
+    }
+  </script>
+</html>
