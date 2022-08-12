@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, Tray } = require('electron')
+const { app, BrowserWindow, Menu, Tray, dialog } = require('electron')
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -8,6 +8,15 @@ const createWindow = () => {
   })
 
   win.loadFile('./html/index.html')
+  win.openDevTools()
+
+  win.webContents.addListener("did-navigate-in-page",(e,url) => {
+    win.webContents.send("success","ok");
+    var level = Number(url.split("#")[1]);
+    switch (level) {
+      
+    }
+  })
 
   // 阻止窗口关闭
   // win.on('close', (event) => {
