@@ -4,17 +4,20 @@ const createWindow = () => {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
-    title: "寻找小希"
+    title: "寻找小希",
+    webPreferences: {
+      preload: "./preload.js"
+    }
   })
 
   win.loadFile('./html/index.html')
   win.openDevTools()
 
-  win.webContents.addListener("did-navigate-in-page",(e,url) => {
-    win.webContents.send("success","ok");
+  win.webContents.addListener("did-navigate-in-page", (e, url) => {
+    win.webContents.send("success", "ok");
     var level = Number(url.split("#")[1]);
     switch (level) {
-      
+
     }
   })
 
@@ -65,5 +68,5 @@ app.whenReady().then(() => {
   // 设置一个顶部菜单栏
   Menu.setApplicationMenu(menu);
 
-  
+
 })
