@@ -71,7 +71,7 @@
       </div>
       <!-- 第三关 -->
       <div v-if="level === 3">
-        <div style="font-size: 35px;display: flex;align-items: center;">如果给小希发红包，应该发<input class="level3Input"
+        <div style="font-size: 30px;display: flex;align-items: center;color: #333">如果给小希发红包，应该发<input class="level3Input"
             @input="checkLevel3Input" v-model="level3Input" />元</div>
       </div>
       <!-- 第四关 -->
@@ -87,7 +87,12 @@
       <!-- 第五关 -->
       <div v-if="level === 5">
         <div>保持十秒钟不理小希</div>
-
+      </div>
+      <!-- 第六关 -->
+      <div v-if="level === 6">
+        <div>见到小希后，（让你的电脑）在心里默念十个字，然后点击下面的按钮检测你的内心</div>
+        <button @click="checkLevel6Clipboard">检测</button>
+        <div v-if="level6False && !levelImg">不对哦，给你一拳!</div>
       </div>
       <!-- 通关按钮 -->
       <div>
@@ -100,7 +105,6 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 <script src="./render.js"></script>
 <script>
-  const { ipcRenderer } = require('electron')
   const LEVEL_NAME = [
     "序章",
     "第一关",
@@ -128,20 +132,20 @@
       level2InputDisabled: false,
 
       // 第三关
-      level3Input: ""
+      level3Input: "",
+
+      // 第六关
+      level6False: false
     },
     watch: {
       level: {
         handler(nval) {
-          if (nval == 5) {
-            window.addEventListener("message", () => {
+          if (nval == 5 || nval == 7) {
+            const success = (event, value) => {
               this.levelImg = true
-            })
-          }
-          else {
-            window.removeEventListener("message", () => {
-              this.levelImg = true
-            })
+              window.electronAPI.removeSuccess(success);
+            }
+            window.electronAPI.handleSuccess(success)
           }
         }
       }
@@ -172,13 +176,21 @@
           this.levelImg = true;
         }
       },
+
+      // 第六关
+      async checkLevel6Clipboard() {
+        const currentClipboard = await window.electronAPI.getClipboard()
+        if (currentClipboard == "希爹是我爹我是希爹儿" || currentClipboard == "希爹是我爹，我是希爹儿" || currentClipboard == "希爹是我爹,我是希爹儿" || currentClipboard == "希爹是我爹 我是希爹儿") {
+          this.levelImg = true;
+        }
+        else {
+          this.level6False = true;
+        }
+      },
+
     },
     mounted() {
       this.level = Number(location.hash.replace("#", "")) || 0;
-      ipcRenderer.on("success",() => {
-        console.log("ok");
-        this.levelImg = true;
-      })
     }
   })
     // window.onbeforeunload = (e) => {

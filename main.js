@@ -1,4 +1,5 @@
-const { app, BrowserWindow, Menu, Tray, dialog } = require('electron')
+const { app, BrowserWindow, Menu, Tray, dialog, ipcMain, clipboard } = require('electron')
+const path = require("path")
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -6,7 +7,7 @@ const createWindow = () => {
     height: 600,
     title: "寻找小希",
     webPreferences: {
-      preload: "./preload.js"
+      preload: path.join(__dirname,"preload.js")
     }
   })
 
@@ -14,10 +15,28 @@ const createWindow = () => {
   win.openDevTools()
 
   win.webContents.addListener("did-navigate-in-page", (e, url) => {
-    win.webContents.send("success", "ok");
     var level = Number(url.split("#")[1]);
     switch (level) {
-
+      case 5:
+        let timeoutId = null;
+        const blur5seconds = () => {
+          timeoutId = setTimeout(() => {
+            win.webContents.send("success", "ok");
+            win.webContents.off("blur",blur5seconds);
+            timeoutId = null;
+          },5000)
+        }
+        win.webContents.on("blur",blur5seconds);
+        win.webContents.on("focus", () => {
+          if (timeoutId) clearTimeout(timeoutId);
+        })
+        break;
+      case 6:
+        ipcMain.handle("getClipBoard",() => clipboard.readText())
+        break;
+      case 7:
+        
+        break;
     }
   })
 
@@ -49,8 +68,8 @@ app.whenReady().then(() => {
     {
       label: '这是啥',
       submenu: [
-        { label: '打开' },
-        { label: '保存' },
+        { label: '这是啥'},
+        
         { label: '退出' }
       ]
     },

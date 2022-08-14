@@ -1,5 +1,7 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
 contextBridge.exposeInMainWorld('electronAPI', {
-  handleCounter: (callback) => ipcRenderer.on('success', callback)
+  handleSuccess: (callback) => ipcRenderer.on('success', callback),
+  removeSuccess: (callback) => ipcRenderer.off('success', callback),
+  getClipboard: () => ipcRenderer.invoke('getClipBoard')
 })
