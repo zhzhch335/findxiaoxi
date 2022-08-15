@@ -5,8 +5,14 @@
   <meta charset="UTF-8">
   <title>寻找小希</title>
   <style>
+    @font-face {
+      font-family: "yunduo";
+      src: url("JinTianYunDuoYouDianTian-2.ttf");
+    }
+
     html,
     body {
+      font-family: "yunduo";
       height: 100%;
       margin: 0;
       padding: 0;
@@ -34,6 +40,17 @@
       border: none;
       outline: none;
       border-bottom: solid #333 1px;
+    }
+
+    .shake {
+      animation: shake 800ms ease-in-out;
+    }
+    @keyframes shake { /* 水平抖动，核心代码 */
+        0%, 100% { transform: translate3d(-1px, 0, 0); }
+        20%, 80% { transform: translate3d(+2px, 0, 0); }
+        30%, 70% { transform: translate3d(-4px, 0, 0); }
+        40%, 60% { transform: translate3d(+4px, 0, 0); }
+        50% { transform: translate3d(-4px, 0, 0); }
     }
   </style>
   <link rel="stylesheet" href="birth.css"/>
@@ -91,9 +108,10 @@
       </div>
       <!-- 第六关 -->
       <div v-if="level === 6">
-        <div>见到小希后，（让你的电脑）在心里默念十个字，然后点击下面的按钮检测你的内心</div>
-        <button @click="checkLevel6Clipboard">检测</button>
-        <div v-if="level6False && !levelImg">不对哦，给你一拳!</div>
+        <div>见到小希后，帅老DD们往往会在心里默念十个字</div>
+        <div>让你的电脑把这十个字默默记在心里，然后点击下面的按钮检测他的内心</div>
+        <button style="margin: 20px 0;" @click="checkLevel6Clipboard">检测</button>
+        <div :class="shakeIt?'shake':''" v-if="level6False && !levelImg">不对哦，给你一拳!</div>
       </div>
       <!-- 第七关 -->
       <div v-if="level === 7">
@@ -123,7 +141,7 @@
     </div>
   </div>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="./vue.js"></script>
 <script src="./render.js"></script>
 <script>
   const LEVEL_NAME = [
@@ -157,6 +175,7 @@
 
       // 第六关
       level6False: false,
+      shakeIt: false,
 
       // 第十关
       level6Blow: false,
@@ -210,6 +229,10 @@
         }
         else {
           this.level6False = true;
+          this.shakeIt = false;
+          setTimeout(() => {
+            this.shakeIt = true;
+          },500)
         }
       },
 
