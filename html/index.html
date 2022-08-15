@@ -36,6 +36,7 @@
       border-bottom: solid #333 1px;
     }
   </style>
+  <link rel="stylesheet" href="birth.css"/>
 </head>
 
 <body style="text-align: center;">
@@ -94,6 +95,22 @@
         <button @click="checkLevel6Clipboard">检测</button>
         <div v-if="level6False && !levelImg">不对哦，给你一拳!</div>
       </div>
+      <!-- 第七关 -->
+      <div v-if="level === 7">
+        <div>小希藏在这个窗口的某处哦</div>
+      </div>
+      <!-- 第八关 -->
+      <div v-if="level === 8">
+        <div>小希藏在你电脑的某处哦</div>
+      </div>
+      <!-- 第九关 -->
+      <div v-if="level === 9">
+        <div>没有任何提示，实在玩不下去就关了吧（这关没有任何套路哦）</div>
+      </div>
+      <!-- 第十关 -->
+      <div v-if="level === 10">
+        <div class="wrapper"><div class="candles"><div class="light__wave"></div><div class="candle1"><div class="candle1__body"><div class="candle1__eyes"><span class="candle1__eyes-one"></span><span class="candle1__eyes-two"></span></div><div class="candle1__mouth"></div></div><div class="candle1__stick"></div></div><div class="candle2"><div class="candle2__body"><div class="candle2__eyes"><div class="candle2__eyes-one"></div><div class="candle2__eyes-two"></div></div></div><div class="candle2__stick"></div></div><div class="candle2__fire"></div><div class="sparkles-one"></div><div class="sparkles-two"></div><div class="candle__smoke-one"></div><div class="candle__smoke-two"></div></div><div class="floor"></div></div>
+      </div>
       <!-- 通关按钮 -->
       <div>
         <img v-if="levelImg" @click="nextLevel()" width="20%" style="cursor:pointer;margin-top: 100px;"
@@ -140,7 +157,7 @@
     watch: {
       level: {
         handler(nval) {
-          if (nval == 5 || nval == 7) {
+          if (nval == 5 || nval == 7 || nval == 8 || nval == 9) {
             const success = (event, value) => {
               this.levelImg = true
               window.electronAPI.removeSuccess(success);
@@ -193,10 +210,6 @@
       this.level = Number(location.hash.replace("#", "")) || 0;
     }
   })
-    // window.onbeforeunload = (e) => {
-    //   alert("小希，找到你了！")
-    //   e.returnValue = false
-    // }
 </script>
 
 </html>
