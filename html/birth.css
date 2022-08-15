@@ -1,7 +1,11 @@
 /* body {
   background-color: #FEF4AD;
-  animation: change-background 3s infinite linear;
+  animation: change-background 3s linear;
 } */
+
+.stop * {
+  animation-play-state:paused !important;
+}
 
 .wrapper {
   position: absolute;
@@ -45,7 +49,7 @@
   transform-origin: center right;
   transform: translate(60%, -25%);
   box-shadow: -2px 0px 0px #95c6f2 inset;
-  animation: expand-body 3s infinite linear;
+  animation: expand-body 3s linear;
 }
 
 .candle1__stick, .candle2__stick {
@@ -62,7 +66,7 @@
 .candle2__stick {
   height: 12px;
   transform-origin: bottom center;
-  animation: stick-animation 3s infinite linear;
+  animation: stick-animation 3s linear;
 }
 
 .candle1__eyes, .candle2__eyes {
@@ -83,7 +87,7 @@
   border-radius: 100%;
   background: #673C63;
   transform: translate(-70%, 0%);
-  animation: blink-eyes 3s infinite linear;
+  animation: blink-eyes 3s linear;
 }
 
 .candle1__eyes-two {
@@ -95,7 +99,7 @@
   border-radius: 100%;
   background: #673C63;
   transform: translate(-70%, 0%);
-  animation: blink-eyes 3s infinite linear;
+  animation: blink-eyes 3s linear;
 }
 
 .candle1__mouth {
@@ -107,7 +111,7 @@
   border-radius: 20px;
   background: #673C63;
   transform: translate(-50%, -50%);
-  animation: uff 3s infinite linear;
+  animation: uff 3s linear;
 }
 
 .candle__smoke-one {
@@ -118,7 +122,7 @@
   height: 3px;
   background: grey;
   transform: translate(-50%, -50%);
-  animation: move-left 3s infinite linear;
+  animation: move-left 3s linear;
 }
 
 .candle__smoke-two {
@@ -130,7 +134,7 @@
   border-radius: 10px;
   background: grey;
   transform: translate(-50%, -50%);
-  animation: move-top 3s infinite linear;
+  animation: move-top 3s linear;
 }
 
 .candle2 {
@@ -146,7 +150,7 @@
   transform: translate(60%, -15%);
   transform-origin: center right;
   box-shadow: -2px 0px 0px #95c6f2 inset;
-  animation: shake-left 3s infinite linear;
+  animation: shake-left 3s linear;
 }
 
 .candle2__eyes-one {
@@ -161,7 +165,7 @@
   float: left;
   background: #673C63;
   transform: translate(-80%, 0%);
-  animation: changeto-lower 3s infinite linear;
+  animation: changeto-lower 3s linear;
 }
 
 .candle2__eyes-two {
@@ -176,7 +180,7 @@
   float: left;
   background: #673C63;
   transform: translate(-80%, 0%);
-  animation: changeto-greater 3s infinite linear;
+  animation: changeto-greater 3s linear;
 }
 
 .light__wave {
@@ -189,7 +193,7 @@
   z-index: 0;
   transform: translate(-25%, -50%) scale(2.5, 2.5);
   border: 2px solid rgba(255, 255, 255, 0.2);
-  animation: expand-light 3s infinite linear;
+  animation: expand-light 3s linear;
 }
 
 .candle2__fire {
@@ -203,7 +207,7 @@
   border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
   background: #FF9800;
   transform: translate(-50%, -50%);
-  animation: dance-fire 3s infinite linear;
+  animation: dance-fire 3s linear;
 }
 
 @keyframes blink-eyes {
