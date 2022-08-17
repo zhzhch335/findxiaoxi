@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, Tray, dialog, ipcMain, clipboard, shell } = require('electron')
+const { app, BrowserWindow, Menu, Tray, dialog, ipcMain, clipboard, shell, globalShortcut } = require('electron')
 const path = require("path")
 
 let tray = null;// 设置系统托盘
@@ -14,7 +14,6 @@ const createWindow = () => {
   })
 
   win.loadFile('./html/index.html')
-  win.openDevTools()
 
   win.webContents.addListener("did-navigate-in-page", (e, url) => {
     var level = Number(url.split("#")[1]);
@@ -77,7 +76,7 @@ const createWindow = () => {
               {
                 label: '希爹在此！',
                 sublabel: '小希，找到你了！',
-                icon: './xiaoxi/alert.jpg',
+                icon: path.join(__dirname,'./xiaoxi/alert.jpg'),
                 click: () => {
                   win.webContents.send("success", "ok");
                   initMenu();
@@ -93,7 +92,7 @@ const createWindow = () => {
         Menu.setApplicationMenu(menu);
         break;
       case 8:
-        tray = new Tray('./xiaoxi/love.png')
+        tray = new Tray(path.join(__dirname, "./xiaoxi/love.png"))
         tray.setToolTip('小希，找到你了！')
         tray.on('click', () => {
           win.webContents.send("success", "ok");
@@ -105,7 +104,7 @@ const createWindow = () => {
           dialog.showMessageBoxSync({
             "title": "错了错了",
             "message": "希爹出现了，不要关闭游戏好不好~",
-            icon: "./xiaoxi/love.png"
+            icon: path.join(__dirname, "./xiaoxi/love.png")
           })
           win.webContents.send("success", "ok");
           event.preventDefault();
@@ -113,13 +112,15 @@ const createWindow = () => {
     }
   })
 
+  globalShortcut.register('Ctrl+I', () => {
+    win.openDevTools();
+  })
 }
 
 app.whenReady().then(() => {
 
   createWindow()
   initMenu();
-
 })
 
 function initMenu() {
