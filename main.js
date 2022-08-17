@@ -1,3 +1,5 @@
+// 打包命令 electron-packager . 寻找小希 --win --out ./dist --app-version=1.0.0  --icon=./logo.ico --verbose --overwrite --win32metadata.CompanyName="琛琛抻面馆"
+
 const { app, BrowserWindow, Menu, Tray, dialog, ipcMain, clipboard, shell, globalShortcut } = require('electron')
 const path = require("path")
 
