@@ -358,6 +358,27 @@ XX XX XX XX XX XX
       reset() {
         this.showHappy = false;
         this.level = 0;
+
+        // 第一关
+        this.levelImg = false;
+
+        // 第二关
+        this.level2Input = "";
+        this.level2InputDisabled = false;
+
+        // 第三关
+        this.level3Input = "";
+
+        // 第六关
+        this.level6False = false;
+        this.shakeIt = false;
+
+        // 第十关
+        this.level6Blow = false;
+        this.showHappy = false;
+        this.blessing = "";
+        this.showStaff = false;
+
         location.hash = this.level;
       },
 
@@ -411,6 +432,7 @@ XX XX XX XX XX XX
         this.level6Blow = true;
         setTimeout(() => {
           this.showHappy = true;
+          this.$forceUpdate();
           const allBlessing = `以前每次制作二创的时候，总想着煽情，想唤起点回忆和眼泪
 现在想想，过生日嘛，开开心心得多好
 眼泪是一种释放，开开心心的大笑出来不也是一种释放嘛
