@@ -103,7 +103,10 @@
     }
     .staff {
       white-space: pre;
-      line-height: 40px;
+      position: fixed;
+      font-size: 15px;
+      right: 20px;
+      bottom: 20px;
     }
     .scrollContent {
       animation: marquee 4s linear forwards;
@@ -232,9 +235,12 @@
           <div class="floor"></div>
         </div>
         <div v-if="!showHappy" style="width: 100%; height: 300px"></div>
-        <div v-if="showHappy"  style="height: 500px;overflow:hidden">
-          <div>
-            <div class="blessing" style="white-space: pre;">{{blessing}}</div>
+        <div v-if="showHappy"  style="height: 500px;overflow:hidden;display: flex;align-items: center;">
+          <!-- <div> -->
+            <div class="blessing" style="white-space: pre;">{{blessing}}
+<button :style="{
+  visibility: showStaff?'visible':'hidden'
+}" class="checkBtn" style="margin: 20px 0;font-size: 20px;" @click="reset()">重玩</button></div>
             <div v-if="showStaff" class="staff">制作人：琛琛
 页面设计：XX XX 
 创意协力：XX XX XX XX 
@@ -243,9 +249,8 @@ XX XX XX XX XX XX XX
 XX XX XX XX XX XX 
 题目协力：XX XX XX XX XX
 XX XX XX XX XX XX
-<button class="checkBtn" style="margin: 20px 0;font-size: 20px;" @click="reset()">重玩</button>
             </div>
-          </div>
+          <!-- </div> -->
         </div>
       </div>
       <!-- 通关按钮 -->
@@ -278,7 +283,7 @@ XX XX XX XX XX XX
     "第十关",
   ]
   const LEVEL_TIPS = [
-    "你是笨蛋吗，直接点图标就好了啊~",
+    "你是笨蛋吗，直接点图片就好了啊~",
     "点击屏幕上的“小希”",
     "希爹是我爹我是希爹儿~",
     "某次直播期间，希爹收到社长0.66元的高额红包",
