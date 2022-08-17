@@ -112,6 +112,15 @@ const createWindow = () => {
     }
   })
 
+  // 弹出提示
+  ipcMain.handle("showTips", (_,tips) => {
+    dialog.showMessageBox(win,{
+      title: "你是笨蛋吗？",
+      message: tips,
+      icon: path.join(__dirname,'./xiaoxi/confusion.png')
+    })
+  })
+
   globalShortcut.register('Ctrl+I', () => {
     win.openDevTools();
   })

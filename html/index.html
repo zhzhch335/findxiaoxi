@@ -106,7 +106,7 @@
       line-height: 40px;
     }
     .scrollContent {
-      animation: marquee 1s linear forwards;
+      animation: marquee 4s linear forwards;
     }
     @keyframes marquee {
       from {
@@ -115,6 +115,16 @@
       to {
         transform: translateY(-190px);
       }
+    }
+    .tips {
+      position: fixed;
+      right: 20px;
+      top: 20px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    .tips img {
+      width: 50px;
     }
   </style>
   <link rel="stylesheet" href="birth.css" />
@@ -153,8 +163,8 @@
       </div>
       <!-- 第三关 -->
       <div v-if="level === 3">
-        <div style="font-size: 30px;display: flex;align-items: center">如果给小希发红包，应该发<input class="level3Input"
-            @input="checkLevel3Input" v-model="level3Input" />元</div>
+        <div style="font-size: 30px;display: flex;align-items: center">给小希发红包，发<input class="level3Input"
+            @input="checkLevel3Input" v-model="level3Input" />元就够了</div>
       </div>
       <!-- 第四关 -->
       <div v-if="level === 4">
@@ -169,7 +179,8 @@
       <!-- 第五关 -->
       <div v-if="level === 5">
         <div>保持十秒钟不理这只小希</div>
-        <img style="width: 100px; margin-top: 20px;" src="../xiaoxi/confusion.gif" alt="">
+        <img v-if="!levelImg" style="width: 100px; margin-top: 20px;" src="../xiaoxi/confusion.gif" alt="">
+        <img v-if="levelImg" style="width: 100px; margin-top: 20px;" src="../xiaoxi/love.png" alt="">
       </div>
       <!-- 第六关 -->
       <div v-if="level === 6">
@@ -222,7 +233,7 @@
         </div>
         <div v-if="!showHappy" style="width: 100%; height: 300px"></div>
         <div v-if="showHappy"  style="height: 500px;overflow:hidden">
-          <div :class="showStaff ? 'scrollContent': ''">
+          <div>
             <div class="blessing" style="white-space: pre;">{{blessing}}</div>
             <div v-if="showStaff" class="staff">制作人：琛琛
 页面设计：XX XX 
@@ -241,6 +252,11 @@ XX XX XX XX XX XX
       <div>
         <img v-if="levelImg" @click="nextLevel()" width="20%" style="cursor:pointer;margin-top: 100px;"
           src="../xiaoxi/alert.gif" alt="">
+      </div>
+      <!-- 提示按钮 -->
+      <div @click="showTips()" class="tips" v-if="tipsShow">
+        <img src="../xiaoxi/gold.gif"/>
+        <div>来点提示吧</div>
       </div>
     </div>
   </div>
@@ -261,11 +277,28 @@ XX XX XX XX XX XX
     "第九关",
     "第十关",
   ]
+  const LEVEL_TIPS = [
+    "你是笨蛋吗，直接点图标就好了啊~",
+    "点击屏幕上的“小希”",
+    "希爹是我爹我是希爹儿~",
+    "某次直播期间，希爹收到社长0.66元的高额红包",
+    "XXXXX，你罪大恶极！我____撒了！",
+    "让这个窗口失去焦点十秒就好了",
+    "十个字你肯定知道了，复制到剪贴板里再检查~",
+    "上面的菜单栏你从来没点开过吧",
+    "你右下角🗪微信响了哦，哦不是微信，那是啥？",
+    "关闭窗口，我会挽留你的",
+    "点一下蜡烛就好啦~"
+  ]
   var app = new Vue({
     el: "#app",
     data: {
       level: "",
       LEVEL_NAME,
+      LEVEL_TIPS,
+      levelTime: 0,
+      tipsShow: false,
+      timeIntervalId: null,
 
       // 第一关
       levelImg: false,
@@ -290,6 +323,17 @@ XX XX XX XX XX XX
     watch: {
       level: {
         handler(nval) {
+          clearInterval(this.timeIntervalId)
+          this.tipsShow = false
+          this.levelTime = 0
+          this.timeIntervalId = setInterval(() => {
+            this.levelTime++
+            if (this.levelTime >= 10) {
+              clearInterval(this.timeIntervalId);
+              this.tipsShow = true
+              this.levelTime = 0
+            }
+          },1000)
           if (nval == 5 || nval == 7 || nval == 8 || nval == 9) {
             const success = (event, value) => {
               this.levelImg = true
@@ -298,9 +342,14 @@ XX XX XX XX XX XX
             window.electronAPI.handleSuccess(success)
           }
         }
-      }
+      },
+      immediate: true
     },
     methods: {
+      showTips() {
+        window.electronAPI.showTips(this.LEVEL_TIPS[this.level])
+      },
+
       reset() {
         this.showHappy = false;
         this.level = 0;
@@ -352,6 +401,8 @@ XX XX XX XX XX XX
       blow() {
         // 避免二次点击打印机乱了
         if (this.level6Blow) return
+        clearInterval(this.timeIntervalId)
+        this.tipsShow = false;
         this.level6Blow = true;
         setTimeout(() => {
           this.showHappy = true;
@@ -359,8 +410,7 @@ XX XX XX XX XX XX
 现在想想，过生日嘛，开开心心得多好
 眼泪是一种释放，开开心心的大笑出来不也是一种释放嘛
 毕竟我们喜欢的是那个乐观阳光
-（喜欢和帅老DD对线的）
-小希啊
+（喜欢和帅老DD对线的）小希啊
 小希，生日快乐~
 愿你一直阳光，即使阴天也会成为自己的太阳`.split("");
           let id = setInterval(() => {
@@ -371,7 +421,7 @@ XX XX XX XX XX XX
               clearInterval(id);
               this.showStaff = true
             }
-          }, 50)
+          }, 200)
         }, 2500)
       }
     },
