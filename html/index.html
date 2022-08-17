@@ -135,6 +135,7 @@
 
 <body style="text-align: center;">
   <div id="app">
+    <audio ref="music" src="./bgm.mp3" loop></audio>
     <h1 v-if="level !== '' && showHappy == false">{{LEVEL_NAME[level]}}</h1>
     <div class="levelContent">
       <div v-if="level === ''">加载中，请稍候……</div>
@@ -453,6 +454,8 @@ XX XX XX XX XX XX
       }
     },
     mounted() {
+      this.$refs.music.volume = 0.2;
+      this.$refs.music.play();
       this.level = Number(location.hash.replace("#", "")) || 0;
     }
   })
