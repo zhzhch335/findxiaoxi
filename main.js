@@ -25,15 +25,12 @@ const createWindow = () => {
             win.webContents.send("success", "ok");
             win.webContents.off("blur", blur5seconds);
             timeoutId = null;
-          }, 5000)
+          }, 10000)
         }
         win.webContents.on("blur", blur5seconds);
         win.webContents.on("focus", () => {
           if (timeoutId) clearTimeout(timeoutId);
         })
-        break;
-      case 6:
-        ipcMain.handle("getClipBoard", () => clipboard.readText())
         break;
       case 7:
         // 菜单栏模板
@@ -100,15 +97,17 @@ const createWindow = () => {
         })
         break;
       case 9:
-        win.on('close', (event) => {
+        const closeCallback = (event) => {
           dialog.showMessageBoxSync({
             "title": "错了错了",
             "message": "希爹出现了，不要关闭游戏好不好~",
             icon: path.join(__dirname, "./xiaoxi/love.png")
           })
           win.webContents.send("success", "ok");
+          win.off('close',closeCallback);
           event.preventDefault();
-        });
+        }
+        win.on('close', closeCallback);
     }
   })
 
@@ -120,6 +119,9 @@ const createWindow = () => {
       icon: path.join(__dirname,'./xiaoxi/confusion.png')
     })
   })
+
+  // 获取剪贴板内容，给第六关使用
+  ipcMain.handle("getClipBoard", () => clipboard.readText())
 
   globalShortcut.register('Ctrl+I', () => {
     win.openDevTools();
