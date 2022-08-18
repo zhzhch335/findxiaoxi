@@ -18,9 +18,9 @@
       padding: 0;
       overflow: hidden;
       font-size: 20px;
-      background: #2c3e50;  /* fallback for old browsers */
-      background: -webkit-linear-gradient(to right, #3498db, #2c3e50);  /* Chrome 10-25, Safari 5.1-6 */
-      background: linear-gradient(to right, #3498db, #2c3e50); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      background: #8ea1d0;  /* fallback for old browsers */
+      background: -webkit-linear-gradient(to left, #8ea1d0, #fff);  /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to left, #8ea1d0, #fff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     }
 
     #app {
@@ -29,16 +29,17 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      color: white;
+      color: black;
     }
 
     .level3Input {
       height: 30px;
       border: none;
-      border-bottom: solid #eee 1px;
+      border-bottom: solid #000 1px;
       width: 80px;
       margin: 0 10px;
       font-size: 30px;
+      background: transparent;
     }
 
     .level3Input:focus-visible {
@@ -162,8 +163,8 @@
       <!-- 第二关 -->
       <div v-if="level === 2">
         <div>你管小希叫什么</div>
-        <input :disabled="level2InputDisabled" @input="checkLevel2Input" v-model="level2Input"
-          style="height: 40px;font-size: 35px;text-align: center;" type="text" />
+        <input :disabled="level2InputDisabled" @input="checkLevel2Input" v-model="level2Input" autofocus
+          style="height: 40px;font-size: 25px;text-align: center;border:none;outline:none;background: url('../xiaoxi/input.png');background-size: 100% 100%;margin-top: 20px;" type="text" />
       </div>
       <!-- 第三关 -->
       <div v-if="level === 3">
