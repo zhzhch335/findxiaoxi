@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-builder"
   },
   "repository": {
     "type": "git",
@@ -23,5 +24,16 @@
   "homepage": "https://github.com/zhzhch335/findxiaoxi#readme",
   "devDependencies": {
     "electron": "^20.0.2"
+  },
+  "build": {
+    "appId": "com.vdproject.findxiaoxi",
+    "copyright":"Lin Yuchen",
+    "productName":"寻找小希",
+    "icon": "logo.ico",
+    "win": {
+      "target": [
+        "portable"
+      ]
+    }
   }
 }

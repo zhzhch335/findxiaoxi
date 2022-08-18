@@ -18,9 +18,32 @@ npm start
 ## ~~或者直接下载我打包好的程序（还没传）~~
 
 # 如何打包
+## ~~已废弃方法~~
 ```bash
 npm i electron-packager -g //全局安装electron-packager
 electron-packager . [程序名] --win --out [输出目录] --app-version=1.0.0  --icon=[图标地址] --verbose --overwrite --win32metadata.CompanyName=[公司名称]
 ```
-## 提问：打包后是一大堆文件里一个exe，有没有办法只打出来一个exe
-答：没有 查了半天没查到 我后来用了压缩软件的自解压打包，自解压到临时文件夹里，然后解压成功后打开这个exe文件
+## ~~提问：打包后是一大堆文件里一个exe，有没有办法只打出来一个exe（别看这个了，看后面electron-builder打包的）~~
+答：~~没有 查了半天没查到 我后来用了压缩软件的自解压打包，自解压到临时文件夹里，然后解压成功后打开这个exe文件~~
+
+## 运行以下命令
+```bash
+npm run build
+```
+然后去dist目录里找即可
+编译的配置项在`package.json`里
+```json
+{
+  "build": {
+    "appId": "com.vdproject.findxiaoxi",
+    "copyright":"Lin Yuchen",
+    "productName":"寻找小希",
+    "icon": "logo.ico",
+    "win": {
+      "target": [
+        "portable"
+      ]
+    }
+  }
+}
+```
