@@ -193,6 +193,7 @@
         <div>让你的电脑把这十个字默默记在心里，然后点击下面的按钮检测他的内心</div>
         <button class="checkBtn" style="margin: 20px 0;" @click="checkLevel6Clipboard">检测</button>
         <div :class="shakeIt?'shake':''" v-if="level6False && !levelImg">不对哦，给你一拳!</div>
+        <input type="text" placeholder="这是一个没什么用的输入框" style="position:absolute;right: 50px;bottom: 50px;">
       </div>
       <!-- 第七关 -->
       <div v-if="level === 7">
@@ -293,7 +294,7 @@ XX XX XX XX XX XX
     "让这个窗口失去焦点十秒就好了",
     "十个字你肯定知道了，复制到剪贴板里再检查~",
     "上面的菜单栏你从来没点开过吧",
-    "你右下角🗪微信响了哦，哦不是微信，那是啥？",
+    "你右下角🗪微信响了哦，哦不是微信，那是啥？（其实就是图标在右下角托盘中啦~）",
     "关闭窗口，我会挽留你的",
     "点一下蜡烛就好啦~"
   ]
@@ -437,7 +438,7 @@ XX XX XX XX XX XX
           this.$forceUpdate();
           const allBlessing = `以前每次制作二创的时候，总想着煽情，想唤起点回忆和眼泪
 现在想想，过生日嘛，开开心心得多好
-眼泪是一种释放，开开心心的大笑出来不也是一种释放嘛
+眼泪是一种释放，开开心心地大笑不也是一种释放嘛
 毕竟我们喜欢的是那个乐观阳光
 （喜欢和帅老DD对线）的小希啊
 小希，生日快乐~
