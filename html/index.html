@@ -130,6 +130,13 @@
     .tips img {
       width: 50px;
     }
+    .soundCtrl {
+      position: absolute;
+      left: 20px;
+      top: 20px;
+      width: 30px;
+      cursor: pointer;
+    }
   </style>
   <link rel="stylesheet" href="birth.css" />
 </head>
@@ -137,6 +144,7 @@
 <body style="text-align: center;">
   <div id="app">
     <audio ref="music" src="./bgm.mp3" loop></audio>
+    <audio ref="warning" src="./warning.mp3"></audio>
     <h1 v-if="level !== '' && showHappy == false">{{LEVEL_NAME[level]}}</h1>
     <div class="levelContent">
       <div v-if="level === ''">加载中，请稍候……</div>
@@ -245,13 +253,8 @@
   visibility: showStaff?'visible':'hidden'
 }" class="checkBtn" style="margin: 20px 0;font-size: 20px;" @click="reset()">重玩</button></div>
             <div v-if="showStaff" class="staff">制作人：琛琛
-页面设计：XX XX 
-创意协力：XX XX XX XX 
-XX XX XX XX XX XX XX
-测试协力： XX XX XX XX 
-XX XX XX XX XX XX 
-题目协力：XX XX XX XX XX
-XX XX XX XX XX XX
+页面设计：SirO 不忘那抹天蓝 
+实况攻略：月心未央
             </div>
           <!-- </div> -->
         </div>
@@ -267,6 +270,8 @@ XX XX XX XX XX XX
         <div>来点提示吧</div>
       </div>
     </div>
+    <img v-if="musicPlay === true" @click="muteMusic()" class="soundCtrl" src="../xiaoxi/sound.png" alt="">
+    <img v-if="musicPlay === false" @click="playMusic()" class="soundCtrl" src="../xiaoxi/mute.png" alt="">
   </div>
 </body>
 <script src="./vue.js"></script>
@@ -327,6 +332,8 @@ XX XX XX XX XX XX
       showHappy: false,
       blessing: "",
       showStaff: false,
+
+      musicPlay: null
     },
     watch: {
       level: {
@@ -402,6 +409,12 @@ XX XX XX XX XX XX
           this.level2InputDisabled = true;
           this.levelImg = true;
         }
+        else {
+          if (this.level2Input.includes("老婆")) {
+            window.electronAPI.showTips("赶快道歉！否则桃老师的斧子马上就到你家门口！！！")
+            this.$refs.warning.play()
+          }
+        }
       },
 
       // 第三关
@@ -453,11 +466,21 @@ XX XX XX XX XX XX
             }
           }, 200)
         }, 2500)
+      },
+      muteMusic() {
+        this.$refs.music.pause();
+        this.musicPlay = false 
+      },
+      playMusic() {
+        this.$refs.music.play();
+        this.musicPlay = true  
       }
     },
     mounted() {
+      this.$refs.warning.volume = 0.4;
       this.$refs.music.volume = 0.2;
       this.$refs.music.play();
+      this.musicPlay = true
       this.level = Number(location.hash.replace("#", "")) || 0;
     }
   })
